@@ -7,7 +7,7 @@ namespace ContactControl.Repos
         List<ContactModel> GetAllContacts();
         ContactModel GetContactById(int id);
         ContactModel AddContact(ContactModel contact);
-        //void UpdateContact(ContactModel contact);
+        ContactModel UpdateContact(ContactModel contact);
         //void DeleteContact(int id);
     }
 }

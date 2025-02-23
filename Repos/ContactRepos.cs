@@ -20,9 +20,29 @@ namespace ContactControl.Repos
             _context.SaveChanges();
             return contact;
         }
+        public ContactModel UpdateContact(ContactModel contact)
+        {
+            ContactModel contactDB = GetContactById(contact.Id);
+
+            if (contactDB == null)
+                throw new InvalidOperationException("Contact not found");
+
+            contactDB.Name = contact.Name;
+            contactDB.Email = contact.Email;
+            contactDB.Phone = contact.Phone;
+
+            _context.Contacts.Update(contactDB);
+            _context.SaveChanges();
+            return contactDB;
+        }
         public ContactModel GetContactById(int id)
         {
-            throw new NotImplementedException();
+            var contact = _context.Contacts.FirstOrDefault(x => x.Id == id);
+            if (contact == null)
+            {
+                throw new InvalidOperationException("Contact not found");
+            }
+            return contact;
         }
     }
 }

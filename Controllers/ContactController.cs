@@ -21,7 +21,12 @@ namespace ContactControl.Controllers
             
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
+        {
+            ContactModel contact = _contactRepos.GetContactById(id);
+            return View(contact);
+        }
+        public IActionResult Delete(int id)
         {
             return View();
         }
@@ -33,6 +38,12 @@ namespace ContactControl.Controllers
         public IActionResult Create(ContactModel contactModel)
         {
             _contactRepos.AddContact(contactModel);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Edit(ContactModel contactModel)
+        {
+            _contactRepos.UpdateContact(contactModel);
             return RedirectToAction("Index");
         }
     }
