@@ -44,5 +44,16 @@ namespace ContactControl.Repos
             }
             return contact;
         }
+        public bool DeleteContact(int id)
+        {
+            ContactModel contactDB = GetContactById(id);
+
+            if (contactDB == null)
+                throw new InvalidOperationException("Contact not found");
+
+            _context.Contacts.Remove(contactDB);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

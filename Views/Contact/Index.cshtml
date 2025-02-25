@@ -31,7 +31,7 @@
                         <td>@contact.Phone</td>
                         <td>
                             <a role="button" class="btn btn-primary" asp-controller="Contact" asp-action="Edit" asp-route-id="@contact.Id">Edit</a>
-                            <a role="button" class="btn btn-danger" asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.Id">Delete</a>
+                            <a role="button" class="btn btn-danger" asp-controller="Contact" asp-action="DeleteConfirm" asp-route-id="@contact.Id">Delete</a>
                         </td>
                     </tr>
                 }

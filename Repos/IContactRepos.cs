@@ -8,6 +8,6 @@ namespace ContactControl.Repos
         ContactModel GetContactById(int id);
         ContactModel AddContact(ContactModel contact);
         ContactModel UpdateContact(ContactModel contact);
-        //void DeleteContact(int id);
+        bool DeleteContact(int id);
     }
 }
