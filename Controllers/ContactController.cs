@@ -32,20 +32,52 @@ namespace ContactControl.Controllers
         }
         public IActionResult Delete(int id)
         {
-            _contactRepos.DeleteContact(id);
-            return RedirectToAction("Index");
+            try
+            {
+                _contactRepos.DeleteContact(id);
+                TempData["success"] = "Contact deleted successfully";
+                return RedirectToAction("Index");
+            }catch(Exception ex)
+            {
+                TempData["error"] = $"something went wrong{ex.Message}";
+                return RedirectToAction("Index");
+            }
         }
         [HttpPost]
         public IActionResult Create(ContactModel contactModel)
         {
-            _contactRepos.AddContact(contactModel);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contactRepos.AddContact(contactModel);
+                    TempData["success"] = "Contact created successfully";
+                    return RedirectToAction("Index");
+                }
+                return View(contactModel);
+            }catch(Exception ex)
+            {
+                TempData["error"] = $"something went wrong{ex.Message}";
+                return RedirectToAction("Index");
+            }
         }
         [HttpPost]
         public IActionResult Edit(ContactModel contactModel)
         {
-            _contactRepos.UpdateContact(contactModel);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contactRepos.UpdateContact(contactModel);
+                    TempData["success"] = "Contact updated successfully";
+                    return RedirectToAction("Index");
+                }
+                return View(contactModel);
+            }catch(Exception ex)
+            {
+                TempData["error"] = $"something went wrong{ex.Message}";
+                return RedirectToAction("Index");
+            }
         }
     }
 }
