@@ -2,6 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+let table = new DataTable('#table-contacts');
+
 $(document).on('click', '.close-alert', function () {
     $('.alert').hide();
 });
