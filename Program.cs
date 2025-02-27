@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BancContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 builder.Services.AddScoped<IContactRepos, ContactRepos>();
+builder.Services.AddScoped<IUserRepos, UserRepos>();
 
 var app = builder.Build();
 

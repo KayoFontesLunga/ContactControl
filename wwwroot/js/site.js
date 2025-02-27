@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 let table = new DataTable('#table-contacts');
+let table2 = new DataTable('#table-users');
 
 $(document).on('click', '.close-alert', function () {
     $('.alert').hide();
