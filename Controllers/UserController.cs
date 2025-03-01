@@ -39,5 +39,24 @@ namespace ContactControl.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public IActionResult DeleteConfirm(int id)
+        {
+            UserModel user = _userRepos.GetUserById(id);
+            return View(user);
+        }
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _userRepos.DeleteUser(id);
+                TempData["success"] = "User deleted successfully";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = $"something went wrong{ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
