@@ -11,6 +11,7 @@ namespace ContactControl.Controllers
         {
             _contactRepos = contactRepos;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             List<ContactModel> contacts = _contactRepos.GetAllContacts();
@@ -20,11 +21,13 @@ namespace ContactControl.Controllers
         {
             return View();
         }
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             ContactModel contact = _contactRepos.GetContactById(id);
             return View(contact);
         }
+        [HttpGet]
         public IActionResult DeleteConfirm(int id)
         {
             ContactModel contact = _contactRepos.GetContactById(id);

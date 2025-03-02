@@ -11,6 +11,7 @@ namespace ContactControl.Controllers
         {
             _userRepos = userRepos;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             List<UserModel> users = _userRepos.GetAllUsers();
@@ -19,6 +20,12 @@ namespace ContactControl.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            UserModel user = _userRepos.GetUserById(id);
+            return View(user);
         }
         [HttpPost]
         public IActionResult Create(UserModel userModel)
@@ -39,6 +46,7 @@ namespace ContactControl.Controllers
                 return RedirectToAction("Index");
             }
         }
+        [HttpGet]
         public IActionResult DeleteConfirm(int id)
         {
             UserModel user = _userRepos.GetUserById(id);
@@ -51,6 +59,34 @@ namespace ContactControl.Controllers
                 _userRepos.DeleteUser(id);
                 TempData["success"] = "User deleted successfully";
                 return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = $"something went wrong{ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public IActionResult Edit(UserNoPasswordModel userNoPasswordModel)
+        {
+            try
+            {
+                UserModel? user = null;
+                if (ModelState.IsValid)
+                {
+                    user = new UserModel()
+                    {
+                        Id = userNoPasswordModel.Id,
+                        Name = userNoPasswordModel.Name,
+                        Email = userNoPasswordModel.Email,
+                        Login = userNoPasswordModel.Login,
+                        Profile = userNoPasswordModel.Profile
+                    };
+                    user = _userRepos.UpdateUser(user);
+                    TempData["success"] = "User updated successfully";
+                    return RedirectToAction("Index");
+                }
+                return View(user);
             }
             catch (Exception ex)
             {
