@@ -3,12 +3,13 @@ using ContactControl.Models;
 
 namespace ContactControl.Repos
 {
-    public class UserRepos : IUserRepos
+    public class UserRepos(BancContext context) : IUserRepos
     {
-        private readonly BancContext _context;
-        public UserRepos(BancContext context)
+        private readonly BancContext _context = context;
+
+        public UserModel GetByLogin(string login)
         {
-            _context = context;
+            return _context.Users.FirstOrDefault(x => x.Email == login);
         }
         public List<UserModel> GetAllUsers()
         {

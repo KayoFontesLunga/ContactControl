@@ -1,0 +1,25 @@
+﻿@model LoginModel
+@{
+    Layout = "_OfflineLayout";
+    ViewData["Title"] = "Login";
+}
+@if(TempData["error"] != null)
+{
+<div class="alert alert-danger" role="alert">
+        <button type="button" class="btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["error"]
+    </div>
+}
+<form asp-controller="Login" asp-action="EnterLogin">
+    <div class="mb-3">
+        <label for="login" class="form-label">Email address</label>
+        <input type="email" asp-for="Email" class="form-control" id="login" aria-describedby="emailHelp">
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" asp-for="Password" class="form-control" id="password">
+        @Html.ValidationMessageFor(x => x.Password)
+    </div>
+    <button type="submit" class="btn btn-primary">Enter</button>
+</form>
