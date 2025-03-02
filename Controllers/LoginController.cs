@@ -1,16 +1,27 @@
 ﻿using ContactControl.Models;
 using ContactControl.Repos;
 using Microsoft.AspNetCore.Mvc;
+using ISession = ContactControl.Helpper.ISession;
 
 namespace ContactControl.Controllers
 {
-    public class LoginController(IUserRepos userRepos) : Controller
+    public class LoginController(IUserRepos userRepos, ISession session) : Controller
     {
         private readonly IUserRepos _userRepos = userRepos;
+        private readonly ISession _session = session;
 
         public IActionResult Index()
         {
+            if (_session.GetUserSession() != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
+        }
+        public IActionResult Logout()
+        {
+            _session.RemoveUserSession();
+            return RedirectToAction("Index", "Login");
         }
         [HttpPost]
         public IActionResult EnterLogin(LoginModel loginModel)
@@ -25,16 +36,17 @@ namespace ContactControl.Controllers
                     {
                         if(user.Password == loginModel.Password)
                         {
+                            _session.CreateUserSession(user);
                             return RedirectToAction("Index", "Home");
                         }
-                        else
-                        {
-                            TempData["error"] = "Invalid password";
-                        }
+                       
+                        
+                        TempData["error"] = "Invalid password";
+                       
                     }
                     TempData["error"] = "Invalid login";
                 }
-                return View("Index");
+                return View("Index", loginModel);
             }
             catch (Exception ex)
             {
