@@ -1,9 +1,11 @@
 using System.Diagnostics;
+using ContactControl.Filters;
 using ContactControl.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactControl.Controllers
 {
+    [LoggedUserPage]
     public class HomeController : Controller
     {
         public IActionResult Index()

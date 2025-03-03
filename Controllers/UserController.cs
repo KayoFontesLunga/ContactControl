@@ -1,9 +1,11 @@
-﻿using ContactControl.Models;
+﻿using ContactControl.Filters;
+using ContactControl.Models;
 using ContactControl.Repos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactControl.Controllers
 {
+    [RestrictedPage]
     public class UserController : Controller
     {
         private readonly IUserRepos _userRepos;
