@@ -1,4 +1,5 @@
 ﻿using ContactControl.Enums;
+using ContactControl.Helpper;
 using System.ComponentModel.DataAnnotations;
 
 namespace ContactControl.Models
@@ -21,7 +22,11 @@ namespace ContactControl.Models
         public DateTime? DataUpdate { get; set; }
         public bool ValidPassword(string password)
         {
-            return Password == password;
+            return Password == password.Encrypt();
+        }
+        public void SetPassword()
+        {
+            Password = Password.Encrypt();
         }
     }
 }

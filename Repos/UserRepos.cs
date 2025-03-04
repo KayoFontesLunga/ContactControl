@@ -18,6 +18,7 @@ namespace ContactControl.Repos
         public UserModel AddUser(UserModel user)
         {
             user.RegistrationDate = DateTime.Now;
+            user.SetPassword();
             _context.Users.Add(user);
             _context.SaveChanges();
             return user;

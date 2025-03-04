@@ -34,7 +34,7 @@ namespace ContactControl.Controllers
 
                     if (user != null)
                     {
-                        if(user.Password == loginModel.Password)
+                        if(user.ValidPassword(loginModel.Password))
                         {
                             _session.CreateUserSession(user);
                             return RedirectToAction("Index", "Home");
