@@ -11,6 +11,10 @@ namespace ContactControl.Repos
         {
             return _context.Users.FirstOrDefault(x => x.Email == login);
         }
+        public UserModel GetByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault(x => x.Email == email);
+        }
         public List<UserModel> GetAllUsers()
         {
             return _context.Users.ToList();

@@ -18,6 +18,10 @@ namespace ContactControl.Controllers
             }
             return View();
         }
+        public IActionResult PasswordRedefine()
+        {
+            return View();
+        }
         public IActionResult Logout()
         {
             _session.RemoveUserSession();
@@ -51,6 +55,31 @@ namespace ContactControl.Controllers
             catch (Exception ex)
             {
                 TempData["error"] = $"something went wrong{ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public IActionResult EnterPasswordRedefine(PasswordRedefineModel passwordRedefineModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    UserModel user = _userRepos.GetByEmail(passwordRedefineModel.Email);
+
+                    if (user != null)
+                    {
+                        string newPassword = user.GenerateNewPassword();
+                        TempData["success"] = "We will send a new password to your email";
+                        return RedirectToAction("Index", "Login");
+                    }
+                    TempData["error"] = "something went wrong, we can't your password redefinied";
+                }
+                return View("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = $"something went wrong, we can't your password redefinied{ex.Message}";
                 return RedirectToAction("Index");
             }
         }

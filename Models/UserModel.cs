@@ -28,5 +28,11 @@ namespace ContactControl.Models
         {
             Password = Password.Encrypt();
         }
+        public string GenerateNewPassword()
+        {
+            string newPassword = Guid.NewGuid().ToString().Substring(0, 8);
+            Password = newPassword.Encrypt();
+            return newPassword;
+        }
     }
 }

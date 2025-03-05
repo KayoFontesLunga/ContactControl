@@ -5,9 +5,16 @@
 }
 @if(TempData["error"] != null)
 {
-<div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert">
         <button type="button" class="btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
         @TempData["error"]
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["success"]
     </div>
 }
 <form asp-controller="Login" asp-action="EnterLogin">
@@ -22,4 +29,8 @@
         @Html.ValidationMessageFor(x => x.Password)
     </div>
     <button type="submit" class="btn btn-primary">Enter</button>
+    <p class="mb-4 text-sm mx-auto">
+        Password Forget?
+        <a asp-action="PasswordRedefine" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Password Redefine</a>
+    </p>
 </form>
