@@ -1,14 +1,16 @@
-﻿using ContactControl.Models;
+﻿using ContactControl.Helpper;
+using ContactControl.Models;
 using ContactControl.Repos;
 using Microsoft.AspNetCore.Mvc;
 using ISession = ContactControl.Helpper.ISession;
 
 namespace ContactControl.Controllers
 {
-    public class LoginController(IUserRepos userRepos, ISession session) : Controller
+    public class LoginController(IUserRepos userRepos, ISession session, IEmail email) : Controller
     {
         private readonly IUserRepos _userRepos = userRepos;
         private readonly ISession _session = session;
+        private readonly IEmail _email = email;
 
         public IActionResult Index()
         {
@@ -70,10 +72,20 @@ namespace ContactControl.Controllers
                     if (user != null)
                     {
                         string newPassword = user.GenerateNewPassword();
-                        TempData["success"] = "We will send a new password to your email";
+                        string message = $"Your new password is: {newPassword}";
+                        bool result = _email.SendEmail(user.Email, "ContactControl - New Password", $"Your new password is: {newPassword}");
+                        if (result)
+                        {
+                            _userRepos.UpdateUser(user);
+                            TempData["success"] = "We will send a new password to your email";
+                        }
+                        else
+                        {
+                            TempData["error"] = "something went wrong, we can't send your password redefinied";
+                        }
                         return RedirectToAction("Index", "Login");
                     }
-                    TempData["error"] = "something went wrong, we can't your password redefinied";
+                    TempData["error"] = "something went wrong, we can't send your password redefinied";
                 }
                 return View("Index");
             }

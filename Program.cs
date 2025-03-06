@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IContactRepos, ContactRepos>();
 builder.Services.AddScoped<IUserRepos, UserRepos>();
 builder.Services.AddScoped<ContactControl.Helpper.ISession, Session>();
+builder.Services.AddScoped<IEmail, Email>();
 builder.Services.AddSession(o =>
 {
     o.Cookie.HttpOnly = true;
