@@ -2,7 +2,7 @@
 
 namespace ContactControl.Helpper;
 
-public interface ISession
+public interface ISessionHelper
 {
     void CreateUserSession(UserModel user);
     void RemoveUserSession();

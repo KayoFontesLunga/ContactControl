@@ -1,0 +1,45 @@
+﻿@model ChangePasswordModel
+@using ContactControl.Enums
+@{
+    ViewData["Title"] = "Change Password";
+}
+<div class="text-center">
+    <h1 class="display-4">Change Password</h1>
+</div>
+
+@if (TempData["sucess"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["success"]
+    </div>
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+        @TempData["error"]
+    </div>
+}
+<form asp-controller="ChangePassword" asp-action="ChangePassword" method="post">
+
+    <div class="mb-3">
+        <label for="ActualPassword">Actual Password</label>
+        <input type="password" asp-for="ActualPassword" class="form-control" placeholder="Enter actual password">
+        @Html.ValidationMessageFor(x => x.ActualPassword)
+    </div>
+    <div class="mb-3">
+        <label for="newPassword">New Password</label>
+        <input type="password" asp-for="NewPassword" class="form-control" placeholder="Enter new password">
+        @Html.ValidationMessageFor(x => x.NewPassword)
+    </div>
+    <div class="mb-3">
+        <label for="confirmPassword">Confirm new Password</label>
+        <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Confirm new password">
+        @Html.ValidationMessageFor(x => x.ConfirmPassword)
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary">Change</button>
+        <a class="btn btn-secondary" asp-controller="Home" asp-action="Index" role="button">Back</a>
+    </div>
+</form>
