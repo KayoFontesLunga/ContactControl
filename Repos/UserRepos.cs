@@ -44,6 +44,27 @@ namespace ContactControl.Repos
             _context.SaveChanges();
             return userDB;
         }
+        public UserModel ChangePassword(ChangePasswordModel changePasswordModel)
+        {
+            UserModel userDB = GetUserById(changePasswordModel.Id);
+            if (userDB == null)
+            {
+                throw new InvalidOperationException("user not found");
+            }
+            if (!userDB.ValidPassword(changePasswordModel.ActualPassword))
+            {
+                throw new InvalidOperationException("Actual password is not match");
+            }
+            if (userDB.ValidPassword(changePasswordModel.NewPassword))
+            {
+                throw new InvalidOperationException("New password is the same as the old one");
+            }
+            userDB.SetNewPassword(changePasswordModel.NewPassword);
+            userDB.DataUpdate = DateTime.Now;
+            _context.Users.Update(userDB);
+            _context.SaveChanges();
+            return userDB;
+        }
         public UserModel GetUserById(int id)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == id);

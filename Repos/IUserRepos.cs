@@ -10,6 +10,7 @@ namespace ContactControl.Repos
         UserModel GetUserById(int id);
         UserModel AddUser(UserModel user);
         UserModel UpdateUser(UserModel user);
+        UserModel ChangePassword(ChangePasswordModel changePasswordModel);
         bool DeleteUser(int id);
     }
 }

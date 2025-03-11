@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using ContactControl.Helpper;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,7 +17,7 @@ builder.Services.AddDbContext<BancContext>(options =>
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IContactRepos, ContactRepos>();
 builder.Services.AddScoped<IUserRepos, UserRepos>();
-builder.Services.AddScoped<ContactControl.Helpper.ISession, Session>();
+builder.Services.AddScoped<ISessionHelper, Session>();
 builder.Services.AddScoped<IEmail, Email>();
 builder.Services.AddSession(o =>
 {

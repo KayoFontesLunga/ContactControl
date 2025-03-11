@@ -2,14 +2,14 @@
 using ContactControl.Models;
 using ContactControl.Repos;
 using Microsoft.AspNetCore.Mvc;
-using ISession = ContactControl.Helpper.ISession;
+using ISessionHelper = ContactControl.Helpper.ISessionHelper;
 
 namespace ContactControl.Controllers
 {
-    public class LoginController(IUserRepos userRepos, ISession session, IEmail email) : Controller
+    public class LoginController(IUserRepos userRepos, ISessionHelper session, IEmail email) : Controller
     {
         private readonly IUserRepos _userRepos = userRepos;
-        private readonly ISession _session = session;
+        private readonly ISessionHelper _session = session;
         private readonly IEmail _email = email;
 
         public IActionResult Index()

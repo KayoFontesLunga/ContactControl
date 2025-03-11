@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ContactControl.Helpper;
 
-public class Session : ISession
+public class Session : ISessionHelper
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
     public Session(IHttpContextAccessor httpContextAccessor)
