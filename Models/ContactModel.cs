@@ -13,5 +13,7 @@ namespace ContactControl.Models
         [Required(ErrorMessage = "Phone is required")]
         [Phone(ErrorMessage = "Phone is not valid")]
         public string? Phone { get; set; }
+        public int? UserId { get; set; }
+        public required UserModel User { get; set; }
     }
 }

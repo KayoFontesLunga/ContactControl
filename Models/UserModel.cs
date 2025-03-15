@@ -20,6 +20,7 @@ namespace ContactControl.Models
         public ProfileEnum? Profile { get; set; }
         public DateTime RegistrationDate { get; set; }
         public DateTime? DataUpdate { get; set; }
+        public virtual List<ContactModel> Contacts { get; set; }
         public bool ValidPassword(string password)
         {
             return Password == password.Encrypt();
