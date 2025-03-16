@@ -9,6 +9,10 @@ public class ContactMap : IEntityTypeConfiguration<ContactModel>
     public void Configure(EntityTypeBuilder<ContactModel> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasKey(x => x.User);
+
+        builder.HasOne(c => c.User)
+            .WithMany(u => u.Contacts)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }
