@@ -1,4 +1,5 @@
 ﻿using ContactControl.Filters;
+using ContactControl.Helpper;
 using ContactControl.Models;
 using ContactControl.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +10,17 @@ namespace ContactControl.Controllers
     public class ContactController : Controller
     {
         private readonly IContactRepos _contactRepos;
-        public ContactController(IContactRepos contactRepos)
+        private readonly ISessionHelper _session;
+        public ContactController(IContactRepos contactRepos, ISessionHelper session)
         {
             _contactRepos = contactRepos;
+            _session = session;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            List<ContactModel> contacts = _contactRepos.GetAllContacts();
+            UserModel user = _session.GetUserSession();
+            List<ContactModel> contacts = _contactRepos.GetAllContacts(user.Id);
             return View(contacts);
         }
         public IActionResult Create()
@@ -55,6 +59,8 @@ namespace ContactControl.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    UserModel user = _session.GetUserSession();
+                    contactModel.UserId = user.Id;
                     _contactRepos.AddContact(contactModel);
                     TempData["success"] = "Contact created successfully";
                     return RedirectToAction("Index");
@@ -73,6 +79,8 @@ namespace ContactControl.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    UserModel user = _session.GetUserSession();
+                    contactModel.UserId = user.Id;
                     _contactRepos.UpdateContact(contactModel);
                     TempData["success"] = "Contact updated successfully";
                     return RedirectToAction("Index");

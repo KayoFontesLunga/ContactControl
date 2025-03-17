@@ -10,9 +10,9 @@ namespace ContactControl.Repos
         {
             _context = context;
         }
-        public List<ContactModel> GetAllContacts()
+        public List<ContactModel> GetAllContacts(int userId)
         {
-            return _context.Contacts.ToList();
+            return _context.Contacts.Where(x => x.UserId == userId).ToList();
         }
         public ContactModel AddContact(ContactModel contact)
         {
